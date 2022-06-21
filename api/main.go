@@ -17,8 +17,7 @@ func main() {
 	_, tokenString, _ := tokenAuth.Encode(map[string]interface{}{"user_id": 123})
 	fmt.Printf(tokenString)
 
-	// TODO: Use environment variable for database URL
-	conn, err := pgx.Connect(context.Background(), "postgres://postgres:example@localhost:5432/gifter")
+	conn, err := pgx.Connect(context.Background(), os.Getenv("POSTGRES_URL"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
