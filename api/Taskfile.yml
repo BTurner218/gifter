@@ -8,10 +8,6 @@ tasks:
     cmds:
       - go run main.go
 
-  tidy:
-    cmds:
-      - go mod tidy
-
   create-migration:
     cmds:
       - migrate create -ext sql -dir db/migrations -seq {{.CLI_ARGS}}
