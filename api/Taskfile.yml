@@ -1,13 +1,29 @@
 version: '3'
 
 env:
-  POSTGRES_URL: postgres://postgres:example@localhost:5432/gifter
+  POSTGRES_URL: postgres://postgres:example@localhost:5432/gifter?sslmode=disable
 
 tasks:
   run:
     cmds:
       - go run main.go
 
-  dev:
+  tidy:
     cmds:
-      - go run main.go
+      - go mod tidy
+
+  create-migration:
+    cmds:
+      - migrate create -ext sql -dir db/migrations -seq {{.CLI_ARGS}}
+
+  run-migration:
+    cmds:
+      - migrate -database $POSTGRES_URL -path db/migrations up
+
+  down-migration:
+    cmds:
+      - migrate -database $POSTGRES_URL -path db/migrations down
+
+  force-migration:
+    cmds:
+      - migrate -database $POSTGRES_URL -path postgres/migrations force {{.CLI_ARGS}}
