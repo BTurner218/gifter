@@ -1,14 +1,13 @@
 version: '3'
 
+env:
+  POSTGRES_URL: postgres://postgres:example@localhost:5432/gifter
+
 tasks:
   run:
     cmds:
       - go run main.go
-    env:
-      POSTGRES_URL: postgres://postgres:example@localhost:5432/gifter
 
   dev:
     cmds:
       - go run main.go
-    env:
-      POSTGRES_URL: postgres://postgres:example@localhost:5432/gifter
