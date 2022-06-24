@@ -1,7 +1,7 @@
 version: '3'
 
 env:
-  POSTGRES_URL: postgres://postgres:example@localhost:5432/gifter?sslmode=disable
+  POSTGRESQL_URL: postgres://postgres:example@localhost:5432/gifter?sslmode=disable
 
 tasks:
   run:
@@ -14,12 +14,12 @@ tasks:
 
   run-migration:
     cmds:
-      - migrate -database $POSTGRES_URL -path db/migrations up
+      - migrate -database $POSTGRESQL_URL -path db/migrations up
 
   down-migration:
     cmds:
-      - migrate -database $POSTGRES_URL -path db/migrations down
+      - migrate -database $POSTGRESQL_URL -path db/migrations down
 
   force-migration:
     cmds:
-      - migrate -database $POSTGRES_URL -path postgres/migrations force {{.CLI_ARGS}}
+      - migrate -database $POSTGRESQL_URL -path postgres/migrations force {{.CLI_ARGS}}
