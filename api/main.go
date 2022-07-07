@@ -3,11 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"net/http"
+	"log"
 	"os"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	"github.com/BTurner218/gifter/api/server"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v4"
 )
@@ -24,12 +23,6 @@ func main() {
 	}
 	defer conn.Close(context.Background())
 
-	r := chi.NewRouter()
-	r.Use(middleware.Logger)
-	r.Get("/", hello)
-	http.ListenAndServe(":8080", r)
-}
-
-func hello(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello, World!"))
+	srv := server.NewServer()
+	log.Fatal(srv.Run())
 }

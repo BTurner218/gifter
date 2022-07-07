@@ -22,6 +22,9 @@ func NewServer() *Server {
 		router: chi.NewRouter(),
 	}
 
+	s.routes()
+	s.server.Handler = s.router
+
 	return &s
 }
 
