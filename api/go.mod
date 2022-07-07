@@ -1,4 +1,4 @@
-module api
+module github.com/BTurner218/gifter/api
 
 go 1.18
 
