@@ -4,25 +4,25 @@ import (
 	"context"
 	"log"
 
-	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 type DB struct {
-	*pgx.Conn
+	*pgxpool.Pool
 }
 
 func Connect(url string) (*DB, error) {
-	conn, err := pgx.Connect(context.Background(), url)
+	dbpool, err := pgxpool.Connect(context.Background(), url)
 
 	if err != nil {
 		return nil, err
 	}
 
-	if err := conn.Ping(context.Background()); err != nil {
+	if err := dbpool.Ping(context.Background()); err != nil {
 		return nil, err
 	}
 
 	log.Println("Successfully connected to database")
-	defer conn.Close(context.Background())
-	return &DB{conn}, nil
+	defer dbpool.Close()
+	return &DB{dbpool}, nil
 }
