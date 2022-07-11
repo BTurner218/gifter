@@ -15,12 +15,13 @@ func main() {
 	_, tokenString, _ := tokenAuth.Encode(map[string]interface{}{"user_id": 123})
 	fmt.Println(tokenString)
 
-	_, err := postgres.Connect(os.Getenv("POSTGRESQL_URL"))
+	db, err := postgres.Connect(os.Getenv("POSTGRESQL_URL"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
+	defer db.Close()
 
-	srv := server.NewServer()
+	srv := server.NewServer(db)
 	log.Fatal(srv.Run())
 }

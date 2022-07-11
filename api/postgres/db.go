@@ -23,6 +23,5 @@ func Connect(url string) (*DB, error) {
 	}
 
 	log.Println("Successfully connected to database")
-	defer dbpool.Close()
 	return &DB{dbpool}, nil
 }
