@@ -17,7 +17,7 @@ type Server struct {
 }
 
 type ErrResponse struct {
-	Err            error `json"-"`
+	Err            error `json:"-"`
 	HTTPStatusCode int   `json:"-"`
 
 	StatusText string `json:"status"`
