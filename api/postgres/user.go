@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/BTurner218/gifter/api/gifter"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserService struct {
@@ -29,7 +30,8 @@ func createUser(user *gifter.User, db *DB) error {
 	INSERT INTO users (username, email, password)
 	VALUES ($1, $2, $3)
 	`
-	args := []interface{}{user.Username, user.Email, user.Password}
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	args := []interface{}{user.Username, user.Email, string(hashedPassword)}
 	_, err := db.Exec(context.Background(), query, args...)
 
 	return err
